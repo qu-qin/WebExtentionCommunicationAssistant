@@ -17,7 +17,7 @@
    "content_scripts": [ {
       "all_frames": true,
       "css": [ "css/highlight.css" ],
-      "js": [ "js/content-action.js" ],
+      "js": [ "/lib/tippy.all.min.js", "js/content-action.js" ],
       "run_at": "document_idle",
       "matches": [ "http://*/*", "https://*/*", "file://*/*" ]
    } ],

@@ -104,6 +104,18 @@
 		// range.surroundContents(iNode) will throw exception if word across multi tag
 		iNode.appendChild(range.extractContents());
 		range.insertNode(iNode);
+
+		iNode.setAttribute("title", "lkfdjldfjk lfjdklsfsdjkl");
+		tippy(iNode, {
+			placement: "top",
+			offset: "0, 78",
+			animation: "shift-away",
+			arrow: "true",
+			arrowType: "round",
+			size: "large",
+			theme: "light"
+		});
+
 	};
 	// highlight all keywords by its colour
 	var highlightAllWords = function (wordGroupsDict) {

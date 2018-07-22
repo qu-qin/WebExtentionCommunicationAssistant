@@ -16,9 +16,9 @@
 		}
 
 		var wordGroupsDict = {};
-		wordGroupsDict["C72E04"] = {groupName: "C72E04", isOn: isOn, words:["much", "the"]};
+		wordGroupsDict["C72E04"] = {groupName: "C72E04", isOn: isOn, words:["demo", "the"]};
 		wordGroupsDict["FA9507"] = {groupName: "FA9507", isOn: isOn, words:["romance"]};
-		wordGroupsDict["CACF44"] = {groupName: "CACF44", isOn: isOn, words:["your daily"]};
+		wordGroupsDict["CACF44"] = {groupName: "CACF44", isOn: isOn, words:["William and Kate"]};
 		wordGroupsDict["27AB99"] = {groupName: "27AB99", isOn: isOn, words:["your health"]};
 
 		toggleCheckbox.addEventListener("change", wordGroupToogleHandlerFactory(wordGroupsDict));
