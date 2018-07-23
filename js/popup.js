@@ -16,40 +16,64 @@
 		}
 
 		var wordGroupsDict = {};
-		wordGroupsDict["C72E04"] = {groupName: "C72E04", isOn: isOn, words:["demo", "the"]};
-		wordGroupsDict["FA9507"] = {groupName: "FA9507", isOn: isOn, words:["romance"]};
-		wordGroupsDict["CACF44"] = {groupName: "CACF44", isOn: isOn, words:["William and Kate"]};
-		wordGroupsDict["27AB99"] = {groupName: "27AB99", isOn: isOn, words:["your health"]};
+		wordGroupsDict["C72E04"] = { groupName: "C72E04", isOn: isOn, words: ["demo", "the"] };
+		wordGroupsDict["FA9507"] = { groupName: "FA9507", isOn: isOn, words: ["romance"] };
+		wordGroupsDict["CACF44"] = { groupName: "CACF44", isOn: isOn, words: ["William and Kate"] };
+		wordGroupsDict["27AB99"] = { groupName: "27AB99", isOn: isOn, words: ["your health"] };
 
 		toggleCheckbox.addEventListener("change", wordGroupToogleHandlerFactory(wordGroupsDict));
 	};
 
-	var loadFormDate = function(){
+	var loadFormData = function () {
 		chrome.storage.sync.get('personInfo', function (personInfo) {
-			if(personInfo) 
-			{
-				var form = document.getElementById("form");
-				if(personInfo.major)
-				{
-					form.getElementById("major").value = personInfo.major;
+			var personDetails = (personInfo && personInfo.personInfo) || null;
+			console.log("initial person Details: ");
+			console.log(personDetails);
+			if (personDetails) {
+				if (personDetails.major) {
+					document.getElementById("major").value = personDetails.major;
 				}
-				if(personInfo.occupation)
-				{
-					form.getElementById("occupation").value = personInfo.occupation;
+				if (personDetails.occupation) {
+					document.getElementById("occupation").value = personDetails.occupation;
 				}
-				if(personInfo.degree)
-				{
-					form.getElementById("degree").value = personInfo.degree;
+				if (personDetails.degree) {
+					document.getElementById("degree").value = personDetails.degree;
 				}
 			}
 		});
 
-		document.addEventListener('onFormLoaded', function() {
-			var link = document.getElementById('save');
-			// onClick's logic below:
-			link.addEventListener('click', function() {
-				console.log("clicked!");
+		var elementSave = document.getElementById('save');
+		// onClick's logic below:
+		elementSave.addEventListener('click', function () {
+			var major = document.getElementById("major").value;
+			var occupation = document.getElementById("occupation").value;
+			var degree = document.getElementById("degree").value;
+
+			var personInfo = {};
+			personInfo["major"] = major;
+			personInfo["occupation"] = occupation;
+			personInfo["degree"] = degree;
+
+			chrome.storage.sync.set({
+				personInfo: personInfo
+			}, function () {
+				console.log("personInfo saved");
 			});
+		});
+
+		var elementReset = document.getElementById('reset');
+		// reset logic below:
+		elementReset.addEventListener('click', function () {
+			console.log("reset!");
+			chrome.storage.sync.clear(function() {
+				var error = chrome.runtime.lastError;
+				if (error) {
+					console.error(error);
+				}
+			});
+			document.getElementById("major").value = "";
+			document.getElementById("occupation").value = "";
+			document.getElementById("degree").value = "";
 		});
 	}
 
@@ -71,7 +95,7 @@
 			wordGroupsDict[groupName] = wordGroup;
 		}
 	};
-	var saveAndSendMsg = function (wordGroupsDict) {	
+	var saveAndSendMsg = function (wordGroupsDict) {
 		chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
 			var messageBody = wordGroupsDict;
 			chrome.tabs.sendMessage(tabs[0].id, messageBody, function (response) {
@@ -82,44 +106,43 @@
 	var wordGroupToogleHandlerFactory = function (wordGroupsDict) {
 		return function (event) {
 			chrome.storage.sync.set({
-				isOn: event.target.checked				
+				isOn: event.target.checked
 			}, function () {
 				console.log("isOn saved :" + event.target.checked);
-			});		
-			Object.keys(wordGroupsDict).forEach(function(key) {
+			});
+			Object.keys(wordGroupsDict).forEach(function (key) {
 				wordGroupsDict[key].isOn = event.target.checked;
-			});		
-			console.log(wordGroupsDict);		
+			});
+			console.log(wordGroupsDict);
 			saveAndSendMsg(wordGroupsDict);
+		};
 	};
-};
-var wordListChangeHandlerFactory = function (wordGroupsDict) {
-	return function (event) {
-		var groupName = event.target.dataset.bgColor;
-		var wordGroup = wordGroupsDict[groupName];
-		wordGroup.words = event.target.value.match(/[^\s]+/g) || [];
+	var wordListChangeHandlerFactory = function (wordGroupsDict) {
+		return function (event) {
+			var groupName = event.target.dataset.bgColor;
+			var wordGroup = wordGroupsDict[groupName];
+			wordGroup.words = event.target.value.match(/[^\s]+/g) || [];
 
-		saveAndSendMsg(wordGroupsDict);
+			saveAndSendMsg(wordGroupsDict);
+		};
 	};
-};
 
 
-/*|================================================================|*/
-/*|                    load extension settings                     |*/
-/*|================================================================|*/
-chrome.storage.sync.get('isOn', function (isOn) {
-	// I just dont know how chrome.storage.sync works...
-	// + nothing inside, return {}
-	// + find the key, return {key: value}
-	// var wordGroupsDict = wordGroups.wordGroupsDict || wordGroups;
-	isOn = isOn.isOn || false;
-
-	loadFormDate();
 	/*|================================================================|*/
-	/*|                   popup UI and event binding                   |*/
+	/*|                    load extension settings                     |*/
 	/*|================================================================|*/
-	// use default for 1st time		
-	initToggleAndWordGroup(isOn);
+	chrome.storage.sync.get('isOn', function (isOn) {
+		// I just dont know how chrome.storage.sync works...
+		// + nothing inside, return {}
+		// + find the key, return {key: value}
+		// var wordGroupsDict = wordGroups.wordGroupsDict || wordGroups;
+		isOn = isOn.isOn || false;
+		/*|================================================================|*/
+		/*|                   popup UI and event binding                   |*/
+		/*|================================================================|*/
+		// use default for 1st time		
+		initToggleAndWordGroup(isOn);
+	});
 
-});
+	loadFormData();
 }();

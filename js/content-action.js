@@ -3,7 +3,7 @@
 
 	// init highlight CSS
 	var ruleExistenceDict = {};
-	var sheet = (function() {
+	var sheet = (function () {
 		var style = document.createElement("style");
 		style.appendChild(document.createTextNode(""));	// WebKit hack @@
 		document.head.appendChild(style);
@@ -33,7 +33,7 @@
 			"STYLE": true
 		};
 		var nodeList = [];
-		while(treeWalker.nextNode()) {
+		while (treeWalker.nextNode()) {
 			if (!skipTagName[treeWalker.currentNode.parentNode.tagName]) {
 				nodeList.push(treeWalker.currentNode);
 			}
@@ -96,7 +96,9 @@
 
 		// add highlight class style in CSS
 		if (!ruleExistenceDict[bgColorCode]) {
-			sheet.insertRule([".", selectorName, " { background: #", bgColorCode, " !important; }"].join(""), 0);
+			// sheet.insertRule([".", selectorName, " { background: #", bgColorCode, " !important; }"].join(""), 0);
+			//text-decoration: underline wavy blue;
+			sheet.insertRule([".", selectorName, " { text-decoration-color: #", bgColorCode, " !important; }"].join(""), 0);
 			ruleExistenceDict[bgColorCode] = true;
 			console.log(sheet);
 		}
@@ -168,11 +170,11 @@
 		// remove all highlight first
 		[].slice.call(document.getElementsByClassName("chrome-extension-highlight")).forEach(function (e) {
 			var parentNode = e.parentNode;
-			while(e.firstChild) parentNode.insertBefore(e.firstChild, e);
+			while (e.firstChild) parentNode.insertBefore(e.firstChild, e);
 			parentNode.removeChild(e);
 		});
 
 		highlightAllWords(messageBody);
-		if (sendResponse) sendResponse({content: "highlight done!"});
+		if (sendResponse) sendResponse({ content: "highlight done!" });
 	});
 }();
