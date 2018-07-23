@@ -8,3 +8,15 @@
 
 	color: #4D3A2E;
 }
+
+.tippy-tooltip.honeybee-theme {	/* Your styling here. Example: */
+	background-color:#d1d1e0;
+  	border: 2px solid black;
+	font-weight: bold;
+	color: #333;
+  }
+
+  .tippy-tooltip.honeybee-theme .tippy-backdrop {
+	/* Your styling here. Example: */
+	background-color: yellow;
+  }

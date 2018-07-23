@@ -24,6 +24,35 @@
 		toggleCheckbox.addEventListener("change", wordGroupToogleHandlerFactory(wordGroupsDict));
 	};
 
+	var loadFormDate = function(){
+		chrome.storage.sync.get('personInfo', function (personInfo) {
+			if(personInfo) 
+			{
+				var form = document.getElementById("form");
+				if(personInfo.major)
+				{
+					form.getElementById("major").value = personInfo.major;
+				}
+				if(personInfo.occupation)
+				{
+					form.getElementById("occupation").value = personInfo.occupation;
+				}
+				if(personInfo.degree)
+				{
+					form.getElementById("degree").value = personInfo.degree;
+				}
+			}
+		});
+
+		document.addEventListener('onFormLoaded', function() {
+			var link = document.getElementById('save');
+			// onClick's logic below:
+			link.addEventListener('click', function() {
+				console.log("clicked!");
+			});
+		});
+	}
+
 	/*|================================================================|*/
 	/*|                 load UI data and event binding                 |*/
 	/*|================================================================|*/
@@ -85,7 +114,7 @@ chrome.storage.sync.get('isOn', function (isOn) {
 	// var wordGroupsDict = wordGroups.wordGroupsDict || wordGroups;
 	isOn = isOn.isOn || false;
 
-
+	loadFormDate();
 	/*|================================================================|*/
 	/*|                   popup UI and event binding                   |*/
 	/*|================================================================|*/

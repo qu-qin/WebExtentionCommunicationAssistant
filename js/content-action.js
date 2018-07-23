@@ -105,7 +105,7 @@
 		iNode.appendChild(range.extractContents());
 		range.insertNode(iNode);
 
-		iNode.setAttribute("title", "lkfdjldfjk lfjdklsfsdjkl");
+		iNode.setAttribute("title", "some text explaination balabalabalabalabala.....");
 		tippy(iNode, {
 			placement: "top",
 			offset: "0, 78",
@@ -113,7 +113,7 @@
 			arrow: "true",
 			arrowType: "round",
 			size: "large",
-			theme: "light"
+			theme: 'honeybee'
 		});
 
 	};
