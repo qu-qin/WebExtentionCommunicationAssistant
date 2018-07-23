@@ -16,10 +16,26 @@
 		}
 
 		var wordGroupsDict = {};
-		wordGroupsDict["C72E04"] = { groupName: "C72E04", isOn: isOn, words: ["demo", "the"] };
-		wordGroupsDict["FA9507"] = { groupName: "FA9507", isOn: isOn, words: ["romance"] };
-		wordGroupsDict["CACF44"] = { groupName: "CACF44", isOn: isOn, words: ["William and Kate"] };
-		wordGroupsDict["27AB99"] = { groupName: "27AB99", isOn: isOn, words: ["your health"] };
+		wordGroupsDict["C72E04"] = { groupName: "C72E04", isOn: isOn, words: [{text: "demo"}] };
+		wordGroupsDict["FA9507"] = { groupName: "FA9507", isOn: isOn, words: [{text: "shooting stars"}, {text:"meteor shower"}] };
+		wordGroupsDict["CACF44"] = { groupName: "CACF44", isOn: isOn, words: [{text: "William and Kate"}] };
+		wordGroupsDict["27AB99"] = { groupName: "27AB99", isOn: isOn, words: [{text: "your health"}] };
+
+		Object.keys(wordGroupsDict).forEach(function(color) {
+			wordGroupsDict[color].words.forEach(function(wordMap) {
+				getWikipediaResult(wordMap.text).done(function(data) {
+					var result = data[2][0];
+					result = result + " " + data[3][0];					
+					wordMap.result = result;
+				}).fail(function() {
+					alert('error');
+				});
+			});
+		});
+
+		setTimeout(function() {
+			console.log(wordGroupsDict);
+		}, 5000);
 
 		toggleCheckbox.addEventListener("change", wordGroupToogleHandlerFactory(wordGroupsDict));
 	};
@@ -82,26 +98,12 @@
 	var getWikipediaResult = function (search) {
 		var url = "https://en.wikipedia.org/w/api.php?action=opensearch&search=" + search + "&format=json&limit=1&callback=?";
 		var result = "";
-		$.ajax({
+		return $.ajax({
 			type: "GET",
 			url: url,
 			async: false,
-			dataType: "json",
-			success: function (data) {
-				for (var i = 0; i < data[1].length; i++) {
-					result = data[2][i];
-					result = result + " " + data[3][i];					
-					console.log(data[2][i]);
-					console.log(data[3][i]);
-					console.log(result);
-					return result;
-				}
-			},
-			error: function (errorMessage) {
-				alert('error');
-			}
+			dataType: "json"
 		});
-		return result;
 	};
 
 

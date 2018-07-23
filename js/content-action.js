@@ -11,7 +11,7 @@
 	})();
 
 	// highlight word in DOM (textnode only)
-	var highlightWordInTextNodeOnly = function (word, bgColorCode) {
+	var highlightWordInTextNodeOnly = function (word, bgColorCode, result) {
 
 		// skip empty word
 		if (word == null || word.length === 0) return;
@@ -58,12 +58,12 @@
 
 			// highlight all ranges
 			rangeList.forEach(function (r) {
-				highlightRange(r, bgColorCode);
+				highlightRange(r, bgColorCode, result);
 			});
 		});
 	};
 	// highlight word in DOM (keyword can be across multi tag)
-	var highlightWordAcrossNode = function (word, bgColorCode) {
+	var highlightWordAcrossNode = function (word, bgColorCode, result) {
 
 		// reset cursor
 		window.getSelection().removeAllRanges();
@@ -83,11 +83,11 @@
 
 		// highlight all ranges
 		rangeList.forEach(function (r) {
-			highlightRange(r, bgColorCode);
+			highlightRange(r, bgColorCode, result);
 		});
 	};
 	// highlight the keyword by surround it by `i`
-	var highlightRange = function (range, bgColorCode) {
+	var highlightRange = function (range, bgColorCode, result) {
 
 		// create wrapping i
 		var iNode = document.createElement("i");
@@ -107,7 +107,7 @@
 		iNode.appendChild(range.extractContents());
 		range.insertNode(iNode);
 
-		iNode.setAttribute("title", "some text explaination balabalabalabalabala.....falabalabalabalabalalabala balabalabalal abala balabalabalal abalabalaba labaldgs balabalabalal abalabalaba labaldgs balabalabalal abalabalaba labaldgs balabalabalal abalabalaba labaldgs");
+		iNode.setAttribute("title", result);
 
 		tippy(iNode, {
 			placement: "top",
@@ -137,7 +137,10 @@
 		Object.keys(wordGroupsDict).forEach(function (groupName) {
 			if (wordGroupsDict[groupName].isOn) {
 				wordGroupsDict[groupName].words.forEach(function (word) {
-					highlightWordFunction(word, groupName);
+					console.log("word details:")
+					console.log(word["text"]);
+					console.log(word["result"]);
+					highlightWordFunction(word["text"], groupName, word["result"]);
 				});
 			}
 		});
