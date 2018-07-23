@@ -107,10 +107,11 @@
 		iNode.appendChild(range.extractContents());
 		range.insertNode(iNode);
 
-		iNode.setAttribute("title", "some text explaination balabalabalabalabala.....");
+		iNode.setAttribute("title", "some text explaination balabalabalabalabala.....falabalabalabalabalalabala balabalabalal abala balabalabalal abalabalaba labaldgs balabalabalal abalabalaba labaldgs balabalabalal abalabalaba labaldgs balabalabalal abalabalaba labaldgs");
+
 		tippy(iNode, {
 			placement: "top",
-			offset: "0, 78",
+			offset: "0, 70",
 			animation: "shift-away",
 			arrow: "true",
 			arrowType: "round",
@@ -119,6 +120,7 @@
 		});
 
 	};
+
 	// highlight all keywords by its colour
 	var highlightAllWords = function (wordGroupsDict) {
 

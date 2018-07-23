@@ -20,4 +20,8 @@
   .tippy-tooltip.honeybee-theme .tippy-backdrop {
 	/* Your styling here. Example: */
 	background-color: yellow;
-  }
+	}
+	
+	.tippy-tooltip .tippy-content {
+		word-wrap: break-word;
+	}

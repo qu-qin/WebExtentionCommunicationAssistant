@@ -65,7 +65,7 @@
 		// reset logic below:
 		elementReset.addEventListener('click', function () {
 			console.log("reset!");
-			chrome.storage.sync.clear(function() {
+			chrome.storage.sync.clear(function () {
 				var error = chrome.runtime.lastError;
 				if (error) {
 					console.error(error);
@@ -75,7 +75,35 @@
 			document.getElementById("occupation").value = "";
 			document.getElementById("degree").value = "";
 		});
+		console.log("start");
+		getWikipediaResult("helicopter");
 	}
+
+	var getWikipediaResult = function (search) {
+		var url = "https://en.wikipedia.org/w/api.php?action=opensearch&search=" + search + "&format=json&limit=1&callback=?";
+		var result = "";
+		$.ajax({
+			type: "GET",
+			url: url,
+			async: false,
+			dataType: "json",
+			success: function (data) {
+				for (var i = 0; i < data[1].length; i++) {
+					result = data[2][i];
+					result = result + " " + data[3][i];					
+					console.log(data[2][i]);
+					console.log(data[3][i]);
+					console.log(result);
+					return result;
+				}
+			},
+			error: function (errorMessage) {
+				alert('error');
+			}
+		});
+		return result;
+	};
+
 
 	/*|================================================================|*/
 	/*|                 load UI data and event binding                 |*/
