@@ -15,30 +15,83 @@
 			toggleCheckbox.checked = true;
 		}
 
-		var wordGroupsDict = {};
-		wordGroupsDict["C72E04"] = { groupName: "C72E04", isOn: isOn, words: [{text: "demo"}] };
-		wordGroupsDict["FA9507"] = { groupName: "FA9507", isOn: isOn, words: [{text: "shooting stars"}, {text:"meteor shower"}] };
-		wordGroupsDict["CACF44"] = { groupName: "CACF44", isOn: isOn, words: [{text: "William and Kate"}] };
-		wordGroupsDict["27AB99"] = { groupName: "27AB99", isOn: isOn, words: [{text: "your health"}] };
-
-		Object.keys(wordGroupsDict).forEach(function(color) {
-			wordGroupsDict[color].words.forEach(function(wordMap) {
-				getWikipediaResult(wordMap.text).done(function(data) {
-					var result = data[2][0];
-					result = result + " " + data[3][0];					
-					wordMap.result = result;
-				}).fail(function() {
-					alert('error');
-				});
+		var alltext = "";
+		chrome.tabs.getSelected(null, function (tab) {
+			chrome.tabs.sendRequest(tab.id, { method: "getText" }, function (response) {
+				setTimeout(function () {
+					if (response.method == "getText") {
+						alltext = response.data;
+						console.log("all text:")
+						console.log(alltext);
+					}
+				}, 3000);
 			});
 		});
 
-		setTimeout(function() {
+
+		var wordGroupsDict = {};
+		wordGroupsDict["C72E04"] = { groupName: "C72E04", isOn: isOn };
+		wordGroupsDict["FA9507"] = { groupName: "FA9507", isOn: isOn, words: [{ text: "shooting stars" }, { text: "meteor shower" }] };
+
+		buildAndGetResult(alltext).done(function (data) {	
+			console.log("data: " + data);			
+			var phrases = data.phrases;
+			console.log("phrases: " + phrases)
+			var list = getWordsToHighlight(phrases);
+			console.log("list: " + list);
+			wordGroupsDict["C72E04"].words = list;
+		}).fail(function () {
+			alert("error again");
+		});
+
+		Object.keys(wordGroupsDict).forEach(function (color) {
+			if (wordGroupsDict[color].words) {
+				wordGroupsDict[color].words.forEach(function (wordMap) {
+					getWikipediaResult(wordMap.text).done(function (data) {
+						var result = data[2][0];
+						result = result + " " + data[3][0];
+						wordMap.result = result;
+					}).fail(function () {
+						alert('error');
+					});
+				});
+			}
+		});
+
+		setTimeout(function () {
 			console.log(wordGroupsDict);
 		}, 5000);
 
 		toggleCheckbox.addEventListener("change", wordGroupToogleHandlerFactory(wordGroupsDict));
 	};
+
+	var getWordsToHighlight = function (result) {
+		var list = [];
+		result.forEach((p) => {
+			if ((p.understanding && p.understanding < 0.5) || (p.ambiguity && p.ambiguity > 0.5)) {
+				list.push(p.text);
+			}
+		})
+		return list;
+	}
+	var buildAndGetResult = function (alltext) {
+		var data = {
+			"sender": ["location:USA", "profession:Journalism", "native:English"],
+			"recipients": [
+				["location:" + document.getElementById("location").value, "profession:" + document.getElementById("profession").value, "native:" + document.getElementById("native").value]
+			],
+			"text": alltext
+		};
+		console.log("----------------data:");
+		console.log(data);
+		return $.ajax({
+			url: 'https://bocgapi.azurewebsites.net/api/analyzer',
+			dataType: 'json',
+			type: 'post',
+			contentType: 'application/json',
+			data: JSON.stringify(data),
+		});
+	}
 
 	var loadFormData = function () {
 		chrome.storage.sync.get('personInfo', function (personInfo) {
@@ -91,8 +144,6 @@
 			document.getElementById("profession").value = "";
 			document.getElementById("native").value = "";
 		});
-		console.log("start");
-		getWikipediaResult("helicopter");
 	}
 
 	var getWikipediaResult = function (search) {
@@ -156,7 +207,6 @@
 			saveAndSendMsg(wordGroupsDict);
 		};
 	};
-
 
 	/*|================================================================|*/
 	/*|                    load extension settings                     |*/

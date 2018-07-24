@@ -146,6 +146,24 @@
 		});
 	};
 
+	chrome.extension.onRequest.addListener(
+		function(request, sender, sendResponse) {
+			if(request.method == "getText"){
+				var text = "";
+				var elements = document.body.getElementsByTagName("*");
+				for (var i = 0; i<elements.length; i++){
+					text = text + elements[i].innerText;
+				}
+				
+				console.log("----body:" + document.getElementById("maincontent").innerText);
+				
+				//var elements = document.body.getElementsByTagName("*");
+				//console.log("----body2:" + elements);
+				sendResponse({data: document.getElementById("maincontent").innerText, method: "getText"}); //same as innerText
+			}
+		}
+	);
+
 	// get words from storage
 	chrome.storage.sync.get('wordGroupsDict', function (wordGroupsDict) {
 
