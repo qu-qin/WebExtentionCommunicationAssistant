@@ -108,7 +108,7 @@
 		range.insertNode(iNode);
 
 		iNode.setAttribute("title", result);
-
+	
 		tippy(iNode, {
 			placement: "top",
 			offset: "0, 70",
@@ -117,6 +117,9 @@
 			arrowType: "round",
 			size: "large",
 			theme: 'honeybee'
+		});
+		chrome.runtime.sendMessage({result: result}, function(response) {
+			console.log(response);
 		});
 
 	};

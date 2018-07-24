@@ -19,7 +19,7 @@
 		chrome.tabs.getSelected(null, function (tab) {
 			chrome.tabs.sendRequest(tab.id, { method: "getText" }, function (response) {
 				setTimeout(function () {
-					if (response.method == "getText") {
+					if (response && response.method == "getText") {
 						alltext = response.data;
 						console.log("all text:")
 						console.log(alltext);
@@ -33,8 +33,8 @@
 		wordGroupsDict["C72E04"] = { groupName: "C72E04", isOn: isOn };
 		wordGroupsDict["FA9507"] = { groupName: "FA9507", isOn: isOn, words: [{ text: "shooting stars" }, { text: "meteor shower" }] };
 
-		buildAndGetResult(alltext).done(function (data) {	
-			console.log("data: " + data);			
+		buildAndGetResult(alltext).done(function (data) {
+			console.log("data: " + data);
 			var phrases = data.phrases;
 			console.log("phrases: " + phrases)
 			var list = getWordsToHighlight(phrases);
@@ -63,8 +63,48 @@
 		}, 5000);
 
 		toggleCheckbox.addEventListener("change", wordGroupToogleHandlerFactory(wordGroupsDict));
+
+		var settings = document.getElementById('image');
+		var form = document.getElementById('form');
+		settings.addEventListener('click', function () {
+			console.log("settings clicked");
+			if (form.style.display === "none") {
+				form.style.display = "block";
+			} else {
+				form.style.display = "none";
+			}
+		});
 	};
 
+	var addResultElements = function (wordGroupsDict) {
+
+		var html = [];
+
+		Object.keys(wordGroupsDict).forEach(function (color) {
+			if (wordGroupsDict[color].words) {
+				var words = wordGroupsDict[color].words;
+				for (var i = 0; i < words.length; i++) {
+					html.push("<div>");
+					html.push("<div class='word'>" + words[i].text + "</div>");
+					html.push("<div class='result'>" + words[i].result + "</div>");
+					html.push("</div>");
+					if (i != words.length - 1) {
+						html.push("<hr>");
+					}
+				}
+				// wordGroupsDict[color].words.forEach(function (wordMap) {
+				// 	html.push("<div>");
+				// 	html.push("<div class='word'>" + wordMap.text + "</div>");
+				// 	html.push("<div class='result'>" + wordMap.result + "</div>");
+				// 	html.push("</div>");					
+				// 	html.push("<hr>");
+				// });
+			}
+		});
+
+		$(".result-list").html(html.join(""));
+
+	}
 	var getWordsToHighlight = function (result) {
 		var list = [];
 		result.forEach((p) => {
@@ -196,6 +236,12 @@
 			});
 			console.log(wordGroupsDict);
 			saveAndSendMsg(wordGroupsDict);
+			if (event.target.checked) {
+				addResultElements(wordGroupsDict);
+			}
+			if (!event.target.checked) {
+				$(".result-list").html("");
+			}
 		};
 	};
 	var wordListChangeHandlerFactory = function (wordGroupsDict) {
@@ -225,4 +271,8 @@
 	});
 
 	loadFormData();
+	chrome.runtime.onMessage.addListener(
+		function (request, sender, sendResponse) {
+			console.log("request result:" + request.result);
+		});
 }();

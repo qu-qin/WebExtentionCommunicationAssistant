@@ -8,9 +8,9 @@
 
 .pure-toggle {
 	cursor: pointer;
-	font-size: 1ex;
-	width: 6em;
-	height: 3em;
+	font-size: 8px;
+	width: 5em;
+	height: 2.5em;
 	display: inline-block;
 	position: relative;
 	background: #DDD;
@@ -23,8 +23,22 @@
 	-webkit-perspective: 300px;
 	perspective: 300px;
 }
+.pure-toggle [class^='.fontawesome-ok'] {
+	font-size: 6.8px;
+	float: left;
+	margin: 0;
+	width: 50%;
+	text-align: left;
+	line-height: inherit;
+	font-family: 'FontAwesome', sans-serif;
+	-moz-transition: all 1s ease-in-out;
+	-o-transition: all 1s ease-in-out;
+	-webkit-transition: all 1s ease-in-out;
+	transition: all 1s ease-in-out;
+}
 
-.pure-toggle [class^='fontawesome-'] {
+.pure-toggle [class^='fontawesome-remove'] {
+	font-size: 6.7px;
 	float: left;
 	margin: 0;
 	width: 50%;
@@ -42,20 +56,20 @@ input[type='checkbox'] + .pure-toggle:before {
 	-ms-transform: rotateY(0deg);
 	-webkit-transform: rotateY(0deg);
 	transform: rotateY(0deg);
-	background-color: #cc0966;
+	background-color: #f65314;
 }
 input[type='checkbox'] + .pure-toggle [class^="fontawesome-"] {
-	color: #cc0966;
+	color: #f65314;
 }
 input[type='checkbox']:checked + .pure-toggle:before {
 	-moz-transform: rotateY(-180deg);
 	-ms-transform: rotateY(-180deg);
 	-webkit-transform: rotateY(-180deg);
 	transform: rotateY(-180deg);
-	background-color: #5EB9CC;
+	background-color: #00a1f1;
 }
 input[type='checkbox']:checked + .pure-toggle [class^="fontawesome-"] {
-	color: #5EB9CC;
+	color: #00a1f1;
 }
 
 .pure-toggle:before {

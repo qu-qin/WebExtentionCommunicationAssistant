@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" style="height:600px; width:300px;">
 
 <head>
 	<meta charset="UTF-8">
@@ -10,30 +10,37 @@
 
 <body>
 	<main id="mainBlock">
-		<div id="form">
-			Your Location:
-			<input type="text" id="location" placeholder="Your location.." name="location" value="">
-			<br> Your Profession:
-			<input type="text" id="profession" placeholder="Your profession.." name="profession" value="">
-			<br> Your Native:
-			<input type="text" id="native" placeholder="Your native.." name="native" value="">
-			<br>
-			<br>
-			<span style="display: inline;">
-				<button id="save">Save</button>
-				<button id="reset">Reset</button>
-			</span>
-		</div>
-		<br>
 		<section>
-			<span class="toggle">
+			<div class="product-name">One Message</div>
+			<div class="toggle">
 				<input type="checkbox" id="checkbox-id" class="pure-toggle-checkbox" hidden />
 				<label class="pure-toggle flip" for="checkbox-id">
 					<div class="fontawesome-remove">OFF</div>
 					<div class="fontawesome-ok">ON</div>
 				</label>
-			</span>
-		</section>
+			</div>
+			<div id="image" class="image">
+				<img id="settings" src="img/settings_icon.png">
+			</div>
+		</section>		
+		<div id="form" class="form">
+				<br>
+				Your Location:
+				<input type="text" id="location" placeholder="Your location.." name="location" value="">
+				<br> Your Profession:
+				<input type="text" id="profession" placeholder="Your profession.." name="profession" value="">
+				<br> Your Native:
+				<input type="text" id="native" placeholder="Your native.." name="native" value="">
+				<br>
+				<br>
+				<span style="display: inline;">
+					<button id="save">Save</button>
+					<button id="reset">Reset</button>
+				</span>
+			</div>
+		<hr>		
+
+		<div class="result-list"></div>
 	</main>
 	<script src="lib/jquery-2.1.1.min.js"></script>
 	<script src="js/popup.js"></script>
