@@ -46,14 +46,14 @@
 			console.log("initial person Details: ");
 			console.log(personDetails);
 			if (personDetails) {
-				if (personDetails.major) {
-					document.getElementById("major").value = personDetails.major;
+				if (personDetails.location) {
+					document.getElementById("location").value = personDetails.location;
 				}
-				if (personDetails.occupation) {
-					document.getElementById("occupation").value = personDetails.occupation;
+				if (personDetails.profession) {
+					document.getElementById("profession").value = personDetails.profession;
 				}
-				if (personDetails.degree) {
-					document.getElementById("degree").value = personDetails.degree;
+				if (personDetails.native) {
+					document.getElementById("native").value = personDetails.native;
 				}
 			}
 		});
@@ -61,14 +61,14 @@
 		var elementSave = document.getElementById('save');
 		// onClick's logic below:
 		elementSave.addEventListener('click', function () {
-			var major = document.getElementById("major").value;
-			var occupation = document.getElementById("occupation").value;
-			var degree = document.getElementById("degree").value;
+			var location = document.getElementById("location").value;
+			var profession = document.getElementById("profession").value;
+			var native = document.getElementById("native").value;
 
 			var personInfo = {};
-			personInfo["major"] = major;
-			personInfo["occupation"] = occupation;
-			personInfo["degree"] = degree;
+			personInfo["location"] = location;
+			personInfo["profession"] = profession;
+			personInfo["native"] = native;
 
 			chrome.storage.sync.set({
 				personInfo: personInfo
@@ -87,9 +87,9 @@
 					console.error(error);
 				}
 			});
-			document.getElementById("major").value = "";
-			document.getElementById("occupation").value = "";
-			document.getElementById("degree").value = "";
+			document.getElementById("location").value = "";
+			document.getElementById("profession").value = "";
+			document.getElementById("native").value = "";
 		});
 		console.log("start");
 		getWikipediaResult("helicopter");
