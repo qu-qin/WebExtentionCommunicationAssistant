@@ -24,52 +24,52 @@
 						console.log("all text:")
 						console.log(alltext);
 						var wordGroupsDict = {};
-		wordGroupsDict["FA9507"] = { groupName: "FA9507", isOn: isOn };
-		wordGroupsDict["C72E05"] = { groupName: "C72E05", isOn: isOn, words: [{ text: "shooting stars" }, { text: "meteor shower" }] };
+						wordGroupsDict["FA9507"] = { groupName: "FA9507", isOn: isOn };
+						wordGroupsDict["C72E05"] = { groupName: "C72E05", isOn: isOn, words: [{ text: "meteor shower" }] };
 
-		buildAndGetResult(alltext).done(function (data) {
-			console.log("data: " + data);
-			var phrases = data.phrases;
-			console.log("phrases: " + phrases)
-			var list = getWordsToHighlight(phrases);
-			console.log("list: " + list);
-			var builtList = buidList(list);
-			console.log("builtList: " + builtList);
-			wordGroupsDict["FA9507"].words = builtList;
-			Object.keys(wordGroupsDict).forEach(function (color) {
-				if (wordGroupsDict[color].words) {
-					wordGroupsDict[color].words.forEach(function (wordMap) {
-						getWikipediaResult(wordMap.text).done(function (data) {
-							wordMap.result = {description: data[2][0], link: data[3][0]};
+						buildAndGetResult(alltext).done(function (data) {
+							console.log("data: " + data);
+							var phrases = data.phrases;
+							console.log("phrases: " + phrases)
+							var list = getWordsToHighlight(phrases);
+							console.log("list: " + list);
+							var builtList = buidList(list);
+							console.log("builtList: " + builtList);
+							wordGroupsDict["FA9507"].words = builtList;
+							Object.keys(wordGroupsDict).forEach(function (color) {
+								if (wordGroupsDict[color].words) {
+									wordGroupsDict[color].words.forEach(function (wordMap) {
+										getWikipediaResult(wordMap.text).done(function (data) {
+											wordMap.result = { description: data[2][0], link: data[3][0] };
+										}).fail(function () {
+											alert('error');
+										});
+									});
+								}
+							});
 						}).fail(function () {
-							alert('error');
+							alert("error again");
 						});
-					});
-				}
-			});
-		}).fail(function () {
-			alert("error again");
-		});
 
-		toggleCheckbox.addEventListener("change", wordGroupToogleHandlerFactory(wordGroupsDict));
+						toggleCheckbox.addEventListener("change", wordGroupToogleHandlerFactory(wordGroupsDict));
 
-		var settings = document.getElementById('image');
-		var form = document.getElementById('form');
-		settings.addEventListener('click', function () {
-			console.log("settings clicked");
-			if (form.style.display === "none") {
-				form.style.display = "block";
-			} else {
-				form.style.display = "none";
-			}
-		});
+						var settings = document.getElementById('image');
+						var form = document.getElementById('form');
+						settings.addEventListener('click', function () {
+							console.log("settings clicked");
+							if (form.style.display === "none") {
+								form.style.display = "block";
+							} else {
+								form.style.display = "none";
+							}
+						});
 					}
-				}, 10);
+				}, 5);
 			});
 		});
 
 
-		
+
 	};
 	var buidList = function (list) {
 		var result = [];
@@ -90,8 +90,7 @@
 				for (var i = 0; i < words.length; i++) {
 					var description = null;
 					var link = null;
-					if (words[i].result)
-					{
+					if (words[i].result) {
 						description = words[i].result.description;
 						link = words[i].result.link;
 					}
