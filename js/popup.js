@@ -64,7 +64,7 @@
 			}
 		});
 					}
-				}, 1000);
+				}, 10);
 			});
 		});
 
@@ -274,15 +274,14 @@
 		// + nothing inside, return {}
 		// + find the key, return {key: value}
 		// var wordGroupsDict = wordGroups.wordGroupsDict || wordGroups;
-		isOn = isOn.isOn || false;
+		isOn = false;
 		/*|================================================================|*/
 		/*|                   popup UI and event binding                   |*/
 		/*|================================================================|*/
 		// use default for 1st time		
 		initToggleAndWordGroup(isOn);
+		loadFormData();
 	});
-
-	loadFormData();
 	chrome.runtime.onMessage.addListener(
 		function (request, sender, sendResponse) {
 			console.log("request result:" + request.result);
