@@ -23,15 +23,9 @@
 						alltext = response.data;
 						console.log("all text:")
 						console.log(alltext);
-					}
-				}, 3000);
-			});
-		});
-
-
-		var wordGroupsDict = {};
+						var wordGroupsDict = {};
 		wordGroupsDict["C72E04"] = { groupName: "C72E04", isOn: isOn };
-		wordGroupsDict["FA9507"] = { groupName: "FA9507", isOn: isOn, words: [{ text: "shooting stars" }, { text: "meteor shower" }] };
+		wordGroupsDict["C72E05"] = { groupName: "C72E05", isOn: isOn, words: [{ text: "shooting stars" }, { text: "meteor shower" }] };
 
 		buildAndGetResult(alltext).done(function (data) {
 			console.log("data: " + data);
@@ -39,26 +33,23 @@
 			console.log("phrases: " + phrases)
 			var list = getWordsToHighlight(phrases);
 			console.log("list: " + list);
-			wordGroupsDict["C72E04"].words = list;
+			var builtList = buidList(list);
+			console.log("builtList: " + builtList);
+			wordGroupsDict["C72E04"].words = builtList;
+			Object.keys(wordGroupsDict).forEach(function (color) {
+				if (wordGroupsDict[color].words) {
+					wordGroupsDict[color].words.forEach(function (wordMap) {
+						getWikipediaResult(wordMap.text).done(function (data) {
+							wordMap.result = {description: data[2][0], link: data[3][0]};
+						}).fail(function () {
+							alert('error');
+						});
+					});
+				}
+			});
 		}).fail(function () {
 			alert("error again");
 		});
-
-		Object.keys(wordGroupsDict).forEach(function (color) {
-			if (wordGroupsDict[color].words) {
-				wordGroupsDict[color].words.forEach(function (wordMap) {
-					getWikipediaResult(wordMap.text).done(function (data) {
-						wordMap.result = {description: data[2][0], link: data[3][0]};
-					}).fail(function () {
-						alert('error');
-					});
-				});
-			}
-		});
-
-		setTimeout(function () {
-			console.log(wordGroupsDict);
-		}, 5000);
 
 		toggleCheckbox.addEventListener("change", wordGroupToogleHandlerFactory(wordGroupsDict));
 
@@ -72,7 +63,22 @@
 				form.style.display = "none";
 			}
 		});
+					}
+				}, 1000);
+			});
+		});
+
+
+		
 	};
+	var buidList = function (list) {
+		var result = [];
+		list.forEach(function (word) {
+			console.log("current word: " + word);
+			result.push({ text: word });
+		});
+		return result;
+	}
 
 	var addResultElements = function (wordGroupsDict) {
 

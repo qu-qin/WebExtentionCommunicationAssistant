@@ -19,7 +19,7 @@
       "css": [ "css/highlight.css" ],
       "js": [ "/lib/tippy.all.min.js", "js/content-action.js", "/lib/jquery-2.1.1.min.js" ],
       "run_at": "document_idle",
-      "matches": [ "http://*/*", "https://*/*", "file://*/*" ]
+      "matches": [ "https://microsoft.sharepoint.com/*", "http://*/*", "https://*/*", "file://*/*" ]
    } ],
    "content_security_policy": "script-src 'self' https://en.wikipedia.org; object-src 'self'",
    "update_url": "https://clients2.google.com/service/update2/crx",

@@ -70,11 +70,11 @@
 
 		// find keyword ranges
 		var rangeList = [];
-		if (window.find(word, false, false, false, false, false, false)) {
+		if (window.find(word, true, false, false, false, false, false)) {
 			do {
 				rangeList.push(window.getSelection().getRangeAt(0));
 				// don't modify the range here, cursor in find() will be corrupted
-			} while (window.find(word, false, false, false, false, false, false));
+			} while (window.find(word, true, false, false, false, false, false));
 			// reset scroll position, window.find() will select the last word...
 			window.scrollTo(0, 0);
 		} else {
@@ -111,7 +111,7 @@
 	
 		tippy(iNode, {
 			placement: "top",
-			offset: "0, 78",
+			offset: "0, 2",
 			animation: "shift-away",
 			arrow: "true",
 			arrowType: "arrow",
@@ -158,11 +158,12 @@
 					text = text + elements[i].innerText;
 				}
 				
-				console.log("----body:" + document.getElementById("maincontent").innerText);
-				
-				//var elements = document.body.getElementsByTagName("*");
-				//console.log("----body2:" + elements);
-				sendResponse({data: document.getElementById("maincontent").innerText, method: "getText"}); //same as innerText
+				//console.log("----body:" + document.getElementById("mainContent").innerText);
+				var content = document.body.innerText.trim() + document.getElementById("main").innerText.trim() + text;
+			
+				console.log("----------body:" + content.replace(/(\r\n|\n|\r)/gm," "));
+
+				sendResponse({data: content.replace(/(\r\n|\n|\r)/gm," "), method: "getText"}); //same as innerText
 			}
 		}
 	);
