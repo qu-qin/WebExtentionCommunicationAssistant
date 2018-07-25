@@ -24,7 +24,7 @@
 						console.log("all text:")
 						console.log(alltext);
 						var wordGroupsDict = {};
-		wordGroupsDict["C72E04"] = { groupName: "C72E04", isOn: isOn };
+		wordGroupsDict["FA9507"] = { groupName: "FA9507", isOn: isOn };
 		wordGroupsDict["C72E05"] = { groupName: "C72E05", isOn: isOn, words: [{ text: "shooting stars" }, { text: "meteor shower" }] };
 
 		buildAndGetResult(alltext).done(function (data) {
@@ -35,7 +35,7 @@
 			console.log("list: " + list);
 			var builtList = buidList(list);
 			console.log("builtList: " + builtList);
-			wordGroupsDict["C72E04"].words = builtList;
+			wordGroupsDict["FA9507"].words = builtList;
 			Object.keys(wordGroupsDict).forEach(function (color) {
 				if (wordGroupsDict[color].words) {
 					wordGroupsDict[color].words.forEach(function (wordMap) {
