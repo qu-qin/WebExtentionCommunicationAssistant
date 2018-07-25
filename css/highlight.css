@@ -11,8 +11,8 @@
 }
 
 .tippy-tooltip.honeybee-theme {	/* Your styling here. Example: */
-	background-color:#d1d1e0;
-  	border: 2px solid black;
+	background-color:white;
+	box-shadow: 1px 1px 1px 1px #888888;
 	font-weight: bold;
 	color: #333;
   }
@@ -25,3 +25,8 @@
 	.tippy-tooltip .tippy-content {
 		word-wrap: break-word;
 	}
+
+	.tippy-popper[x-placement^=top] .tippy-tooltip.honeybee-theme .tippy-arrow {
+		border-top: 7px solid #888888; /* your color here */
+	}
+	

@@ -114,7 +114,7 @@
 			offset: "0, 70",
 			animation: "shift-away",
 			arrow: "true",
-			arrowType: "round",
+			arrowType: "arrow",
 			size: "large",
 			theme: 'honeybee'
 		});
