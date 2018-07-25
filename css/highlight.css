@@ -4,9 +4,8 @@
 	padding-left: 3px;
 	padding-right: 3px;
 	border-bottom: 2px;
-	text-decoration-line: underline;
-	text-decoration-style: wavy;
-	text-decoration-color: blue;
+	box-shadow: 1px 1px 3px rgba(0,0,0,0.3);
+	text-decoration: none;
 	color: #4D3A2E;
 }
 

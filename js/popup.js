@@ -48,9 +48,7 @@
 			if (wordGroupsDict[color].words) {
 				wordGroupsDict[color].words.forEach(function (wordMap) {
 					getWikipediaResult(wordMap.text).done(function (data) {
-						var result = data[2][0];
-						result = result + " " + data[3][0];
-						wordMap.result = result;
+						wordMap.result = {description: data[2][0], link: data[3][0]};
 					}).fail(function () {
 						alert('error');
 					});
@@ -84,9 +82,17 @@
 			if (wordGroupsDict[color].words) {
 				var words = wordGroupsDict[color].words;
 				for (var i = 0; i < words.length; i++) {
+					var description = null;
+					var link = null;
+					if (words[i].result)
+					{
+						description = words[i].result.description;
+						link = words[i].result.link;
+					}
 					html.push("<div>");
 					html.push("<div class='word'>" + words[i].text + "</div>");
-					html.push("<div class='result'>" + words[i].result + "</div>");
+					html.push("<div class='description'>" + description + "</div>");
+					html.push("<div class='link'>" + link + "</div>");
 					html.push("</div>");
 					if (i != words.length - 1) {
 						html.push("<hr>");

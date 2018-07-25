@@ -96,9 +96,9 @@
 
 		// add highlight class style in CSS
 		if (!ruleExistenceDict[bgColorCode]) {
-			// sheet.insertRule([".", selectorName, " { background: #", bgColorCode, " !important; }"].join(""), 0);
+			sheet.insertRule([".", selectorName, " { background: #", bgColorCode, " !important; }"].join(""), 0);
 			//text-decoration: underline wavy blue;
-			sheet.insertRule([".", selectorName, " { text-decoration-color: #", bgColorCode, " !important; }"].join(""), 0);
+			//sheet.insertRule([".", selectorName, " { text-decoration-color: #", bgColorCode, " !important; }"].join(""), 0);
 			ruleExistenceDict[bgColorCode] = true;
 			console.log(sheet);
 		}
@@ -107,11 +107,11 @@
 		iNode.appendChild(range.extractContents());
 		range.insertNode(iNode);
 
-		iNode.setAttribute("title", result);
+		iNode.setAttribute("title", result.description + result.link);
 	
 		tippy(iNode, {
 			placement: "top",
-			offset: "0, 70",
+			offset: "0, 78",
 			animation: "shift-away",
 			arrow: "true",
 			arrowType: "arrow",

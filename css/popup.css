@@ -77,3 +77,11 @@
 	margin: 7px;
 	word-wrap: break-word;
 }
+
+.link {
+	color: #00a1f1;
+	position: relative;
+	top: 2px;
+	margin: 4px;
+	left: -2px;
+}
