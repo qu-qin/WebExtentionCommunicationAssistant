@@ -83,5 +83,9 @@
 	position: relative;
 	top: 2px;
 	margin: 4px;
-	left: -2px;
+	left: -2px;	
+}
+
+.link2 {
+	text-decoration: none;
 }

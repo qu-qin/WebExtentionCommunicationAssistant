@@ -92,7 +92,7 @@
 					html.push("<div>");
 					html.push("<div class='word'>" + words[i].text + "</div>");
 					html.push("<div class='description'>" + description + "</div>");
-					html.push("<div class='link'>" + link + "</div>");
+					html.push("<div class='link'><a class='link2' href='link'>" + link + "</a></div>");
 					html.push("</div>");
 					if (i != words.length - 1) {
 						html.push("<hr>");
