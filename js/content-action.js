@@ -70,11 +70,11 @@
 
 		// find keyword ranges
 		var rangeList = [];
-		if (window.find(word, true, false, false, false, false, false)) {
+		if (window.find(word, true, false, false, true, false, false)) {
 			do {
 				rangeList.push(window.getSelection().getRangeAt(0));
 				// don't modify the range here, cursor in find() will be corrupted
-			} while (window.find(word, true, false, false, false, false, false));
+			} while (window.find(word, true, false, false, true, false, false));
 			// reset scroll position, window.find() will select the last word...
 			window.scrollTo(0, 0);
 		} else {
