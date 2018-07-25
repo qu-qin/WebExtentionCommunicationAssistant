@@ -107,7 +107,7 @@
 		iNode.appendChild(range.extractContents());
 		range.insertNode(iNode);
 
-		iNode.setAttribute("title", result.description + result.link);
+		iNode.setAttribute("title", result.description + "  " + result.link);
 	
 		tippy(iNode, {
 			placement: "top",

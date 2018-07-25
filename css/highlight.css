@@ -23,6 +23,8 @@
 	
 	.tippy-tooltip .tippy-content {
 		word-wrap: break-word;
+		font-size: 12px;
+		text-align: left;
 	}
 
 	.tippy-popper[x-placement^=top] .tippy-tooltip.honeybee-theme .tippy-arrow {
