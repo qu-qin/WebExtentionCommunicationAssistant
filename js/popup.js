@@ -10,10 +10,21 @@
 		var mainBlock = document.getElementById("mainBlock");
 		var className = ["pure-toggle-checkbox"];
 		var toggleCheckbox = mainBlock.getElementsByClassName(className)[0];
+
 		console.log(isOn);
 		if (isOn) {
 			toggleCheckbox.checked = true;
 		}
+		var settings = document.getElementById('image');
+						var form = document.getElementById('form');
+						settings.addEventListener('click', function () {
+							console.log("settings clicked");
+							if (form.style.display === "none") {
+								form.style.display = "block";
+							} else {
+								form.style.display = "none";
+							}
+						});
 
 		var alltext = "";
 		chrome.tabs.getSelected(null, function (tab) {
@@ -47,22 +58,14 @@
 									});
 								}
 							});
+							$(".toggle").css("visibility","visible");
+							$(".load").css("visibility","hidden");
+
 						}).fail(function () {
 							alert("error again");
 						});
-
-						toggleCheckbox.addEventListener("change", wordGroupToogleHandlerFactory(wordGroupsDict));
-
-						var settings = document.getElementById('image');
-						var form = document.getElementById('form');
-						settings.addEventListener('click', function () {
-							console.log("settings clicked");
-							if (form.style.display === "none") {
-								form.style.display = "block";
-							} else {
-								form.style.display = "none";
-							}
-						});
+				
+						toggleCheckbox.addEventListener("change", wordGroupToogleHandlerFactory(wordGroupsDict));						
 					}
 				}, 5);
 			});
@@ -119,17 +122,18 @@
 	var getWordsToHighlight = function (result) {
 		var list = [];
 		result.forEach((p) => {
-			if ((p.understanding && p.understanding < 0.5) || (p.ambiguity && p.ambiguity > 0.5)) {
+			
+				console.log("p: " + p);
 				list.push(p.text);
-			}
+			
 		})
 		return list;
 	}
 	var buildAndGetResult = function (alltext) {
 		var data = {
 			"sender": ["location:USA", "profession:Journalism", "native:English"],
-			"recipients": [
-				["location:" + document.getElementById("location").value, "profession:" + document.getElementById("profession").value, "native:" + document.getElementById("native").value]
+			"recipients": [[]
+				//["location:" + document.getElementById("location").value, "profession:" + document.getElementById("profession").value, "native:" + document.getElementById("native").value]
 			],
 			"text": alltext
 		};

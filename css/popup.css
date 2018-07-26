@@ -24,7 +24,7 @@
 .image {	
     display: inline;
     position: relative;
-    left: 135px;
+    left: 80px;
 	font-weight:  bold;
     font-size: 6.7px;
 }
@@ -88,4 +88,12 @@
 
 .link2 {
 	text-decoration: none;
+}
+
+.load {
+	display: inline;
+	position: relative;
+	color: #00a1f1;
+	top:-4px;
+	left:-15px;
 }

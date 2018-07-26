@@ -58,6 +58,11 @@ input[type='checkbox'] + .pure-toggle:before {
 	transform: rotateY(0deg);
 	background-color: #f65314;
 }
+
+.show{
+	visibility: visible;
+}
+
 input[type='checkbox'] + .pure-toggle [class^="fontawesome-"] {
 	color: #f65314;
 }

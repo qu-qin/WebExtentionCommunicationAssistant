@@ -153,17 +153,25 @@
 		function(request, sender, sendResponse) {
 			if(request.method == "getText"){
 				var text = "";
-				var elements = document.body.getElementsByTagName("*");
+				var elements = document.body.getElementsByTagName("p");
 				for (var i = 0; i<elements.length; i++){
 					text = text + elements[i].innerText;
 				}
+				var header1s = document.body.getElementsByTagName("h1");
+				for (var i = 0; i<header1s.length; i++){
+					text = text + header1s[i].innerText;
+				}
+				var header2s = document.body.getElementsByTagName("h2");
+				for (var i = 0; i<header2s.length; i++){
+					text = text + header2s[i].innerText;
+				}
 				
 				//console.log("----body:" + document.getElementById("mainContent").innerText);
-				var content = document.body.innerText.trim() + document.getElementById("main").innerText.trim() + text;
+				//var content = document.body.innerText.trim() + document.getElementById("main").innerText.trim();
 			
-				console.log("----------body:" + content.replace(/(\r\n|\n|\r)/gm," "));
+				console.log("----------body:" + text.replace(/(\r\n|\n|\r)/gm," "));
 
-				sendResponse({data: content.replace(/(\r\n|\n|\r)/gm," "), method: "getText"}); //same as innerText
+				sendResponse({data: text.replace(/(\r\n|\n|\r)/gm," "), method: "getText"}); //same as innerText
 			}
 		}
 	);
