@@ -51,7 +51,7 @@
 								if (wordGroupsDict[color].words) {
 									wordGroupsDict[color].words.forEach(function (wordMap) {
 										getWikipediaResult(wordMap.text).done(function (data) {
-											wordMap.result = { description: data[2][0], link: data[3][0] };
+											wordMap.result = { description: data[2][0] || "", link: data[3][0] || "https://www.bing.com/search?q=" + wordMap.text};
 										}).fail(function () {
 											alert('error');
 										});
