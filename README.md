@@ -1,3 +1,5 @@
+Note: This is a hack project, please do not expect well defined code base.
+
 # WebExtentionCommunicationAssistant
 highlight word/phrase you don't understand with reference links.
 
